@@ -2,9 +2,9 @@
 require_once BASE_PATH.'/models/getModel.php';
 
 class GetController{
-    static public function getData($table, $columns, $orderBy, $orderMode){
+    static public function getData($table, $columns, $orderBy, $orderMode, $startAt, $endAt){
         $model = new GetModel();
-        $response = $model->getData($table, $columns, $orderBy, $orderMode);
+        $response = $model->getData($table, $columns, $orderBy, $orderMode, $startAt, $endAt);
 
         $json = array(
             'status' => 200,
@@ -14,9 +14,9 @@ class GetController{
         return $json;
     }
 
-    static public function getDataFilter($table, $columns, $in, $equal, $orderBy, $orderMode){
+    static public function getDataFilter($table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt){
         $model = new GetModel();
-        $response = $model->getDataFilter($table, $columns, $in, $equal, $orderBy, $orderMode);
+        $response = $model->getDataFilter($table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt);
 
         $json = array(
             'status' => 200,
