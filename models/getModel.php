@@ -2,14 +2,20 @@
 require_once BASE_PATH.'/models/connection.php';
 
 class GetModel extends Connection{
-    public function getData($table, $columns){
-        $sqlQuery = $this->con->prepare("SELECT $columns FROM $table");
+    public function getData($table, $columns, $orderBy, $orderMode){
+        if($orderBy !== null && $orderMode !== null){
+            $query = "SELECT $columns FROM $table ORDER BY $orderBy $orderMode";
+        }else{
+            $query = "SELECT $columns FROM $table";
+        }
+
+        $sqlQuery = $this->con->prepare($query);
         $sqlQuery->execute();
 
         return $sqlQuery->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getDataFilter($table, $columns, $in, $equal){
+    public function getDataFilter($table, $columns, $in, $equal, $orderBy, $orderMode){
         $arrayIn = explode(',', $in);
         $arrayEqual = explode('_', $equal);
 
@@ -21,7 +27,11 @@ class GetModel extends Connection{
             $andQuery = "";
         }
 
-        $query = "SELECT $columns FROM $table WHERE $arrayIn[0] = :$arrayIn[0] $andQuery";
+        if($orderBy !== null && $orderMode !== null){
+            $query = "SELECT $columns FROM $table WHERE $arrayIn[0] = :$arrayIn[0] $andQuery ORDER BY $orderBy $orderMode";
+        }else{
+            $query = "SELECT $columns FROM $table WHERE $arrayIn[0] = :$arrayIn[0] $andQuery";
+        }
 
         $sqlQuery = $this->con->prepare($query);
         foreach($arrayIn as $key => $value){
