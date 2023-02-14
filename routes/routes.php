@@ -1,5 +1,5 @@
 <?php
 $routesArray = explode("/", $_SERVER['REQUEST_URI']);
-$indexPathAPI = count(array_filter($routesArray)) - 1;
+$indexPathAPI = count(array_filter($routesArray)) - DEEP_PROJECT;
 
-echo $indexPathAPI;
+print_r($indexPathAPI);
