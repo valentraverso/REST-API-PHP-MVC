@@ -3,7 +3,8 @@ $routesArray = explode("/", $_SERVER['REQUEST_URI']);
 $indexPathAPI = count(array_filter($routesArray)) - DEEP_PROJECT;
 
 $table = explode('?', $routesArray[$indexPathAPI + DEEP_PROJECT])[0];
-$columns = $_GET['columns'];
+
+$columns = $_GET['columns'] ?? '*';
 
 if($indexPathAPI === 0){
     $response = array(
