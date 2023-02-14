@@ -2,7 +2,7 @@
 require_once BASE_PATH.'/models/connection.php';
 
 class GetModel extends Connection {
-    public function getData( $table, $columns, $orderBy, $orderMode, $startAt, $endAt) {
+    public function getDataNoFilter( $table, $columns, $orderBy, $orderMode, $startAt, $endAt) {
         
         $query = "SELECT $columns FROM $table";
 
@@ -12,6 +12,31 @@ class GetModel extends Connection {
             $query = "SELECT $columns FROM $table LIMIT $startAt, $endAt";
         } else if($orderBy !== null && $orderMode !== null && $startAt !== null && $endAt){
             $query = "SELECT $columns FROM $table ORDER BY $orderBy $orderMode LIMIT $startAt, $endAt";
+        }
+
+        $sqlQuery = $this->con->prepare( $query );
+        $sqlQuery->execute();
+
+        return $sqlQuery->fetch( PDO::FETCH_ASSOC );
+    }
+
+    public function getRelDataNoFilter( $table, $columns, $tableRel, $equalRel, $orderBy, $orderMode, $startAt, $endAt ) {
+        $arrayTableRel = explode(',', $tableRel);
+        $arrayEqualRel = explode(',', $equalRel);
+
+       
+        foreach($arrayTableRel as $key => $value){
+            $moreTables = "JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
+        }
+
+        $query = "SELECT $columns FROM $table $moreTables";
+
+        if ( $orderBy !== null && $orderMode !== null && $startAt === null && $endAt === null ) {
+            $query = "SELECT $columns FROM $table $moreTables ORDER BY $orderBy $orderMode";
+        } else if($orderBy === null && $orderMode === null && $startAt !== null && $endAt !== null ){
+            $query = "SELECT $columns FROM $table $moreTables LIMIT $startAt, $endAt";
+        } else if($orderBy !== null && $orderMode !== null && $startAt !== null && $endAt){
+            $query = "SELECT $columns FROM $table $moreTables ORDER BY $orderBy $orderMode LIMIT $startAt, $endAt";
         }
 
         $sqlQuery = $this->con->prepare( $query );
