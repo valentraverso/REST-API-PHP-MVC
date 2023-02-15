@@ -24,8 +24,10 @@ class GetModel extends Connection {
         $arrayTableRel = explode( ',', $tableRel );
         $arrayEqualRel = explode( ',', $equalRel );
 
+        $moreTables = "";
+
         foreach ( $arrayTableRel as $key => $value ) {
-            $moreTables = "JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
+            $moreTables .= " JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
         }
 
         $query = "SELECT $columns FROM $table $moreTables";
@@ -48,12 +50,14 @@ class GetModel extends Connection {
         $arrayIn = explode( ',', $in );
         $arrayEqual = explode( '_', $equal );
 
+        $andQuery = '';
+
         if ( count( $arrayIn ) > 1 ) {
             foreach ( $arrayIn as $key => $value ) {
-                $andQuery = 'AND '. $value . ' = :' . $value . ' ';
+                if ( $key > 0 ) {
+                    $andQuery .= 'AND '. $value . ' = :' . $value . ' ';
+                }
             }
-        } else {
-            $andQuery = '';
         }
 
         $query = "SELECT $columns FROM $table WHERE $arrayIn[0] = :$arrayIn[0] $andQuery";
@@ -79,19 +83,23 @@ class GetModel extends Connection {
         $arrayIn = explode( ',', $in );
         $arrayEqual = explode( '_', $equal );
 
+        $andQuery = '';
+
         if ( count( $arrayIn ) > 1 ) {
             foreach ( $arrayIn as $key => $value ) {
-                $andQuery = 'AND '. $value . ' = :' . $value . ' ';
+                if ( $key > 0 ) {
+                    $andQuery .= 'AND '. $value . ' = :' . $value . ' ';
+                }
             }
-        } else {
-            $andQuery = '';
         }
 
         $arrayTableRel = explode( ',', $tableRel );
         $arrayEqualRel = explode( ',', $equalRel );
 
+        $moreTables = "";
+
         foreach ( $arrayTableRel as $key => $value ) {
-            $moreTables = "JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
+            $moreTables .= " JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
         }
 
         $query = "SELECT $columns FROM $table $moreTables WHERE $arrayIn[0] = :$arrayIn[0] $andQuery";
