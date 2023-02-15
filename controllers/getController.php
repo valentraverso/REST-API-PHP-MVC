@@ -26,6 +26,18 @@ class GetController{
         return $json;
     }
 
+    static public function getRelDataFilter($table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt){
+        $model = new GetModel();
+        $response = $model->getRelDataFilter($table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt);
+
+        $json = array(
+            'status' => 200,
+            'results' => $response
+        );
+
+        return $json;
+    }
+
     static public function getDataFilter($table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt){
         $model = new GetModel();
         $response = $model->getDataFilter($table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt);
