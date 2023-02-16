@@ -48,7 +48,7 @@ class GetModel extends Connection {
 
     public function getDataFilter( $table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
         $arrayIn = explode( ',', $in );
-        $arrayEqual = explode( '_', $equal );
+        $arrayEqual = explode( ',', $equal );
 
         $andQuery = '';
 
@@ -81,7 +81,7 @@ class GetModel extends Connection {
 
     public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
         $arrayIn = explode( ',', $in );
-        $arrayEqual = explode( '_', $equal );
+        $arrayEqual = explode( ',', $equal );
 
         $andQuery = '';
 
@@ -123,9 +123,13 @@ class GetModel extends Connection {
         return $sqlQuery->fetch( PDO::FETCH_ASSOC );
     }
 
-    public function getDataRange( $table, $columns, $btwnTo, $min, $max, $orderBy, $orderMode, $startAt, $endAt ) {
+    public function getDataRange( $table, $columns, $btwnTo, $min, $max, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
 
         $query = "SELECT $columns FROM $table WHERE $table.$btwnTo BETWEEN $min AND $max";
+
+        if($in !== null && $equal !== null){
+            $query .= " AND $in IN ('$equal')";
+        }
 
         if ( $orderBy !== null && $orderMode !== null && $startAt === null && $endAt === null ) {
             $query .= " ORDER BY $orderBy $orderMode";

@@ -26,9 +26,9 @@ class GetController{
         return $json;
     }
 
-    static public function getDataRange($table, $columns, $btwnTo, $min, $max, $orderBy, $orderMode, $startAt, $endAt){
+    static public function getDataRange($table, $columns, $btwnTo, $min, $max, $in, $equal, $orderBy, $orderMode, $startAt, $endAt){
         $model = new GetModel();
-        $response = $model->getDataRange($table, $columns, $btwnTo, $min, $max, $orderBy, $orderMode, $startAt, $endAt);
+        $response = $model->getDataRange($table, $columns, $btwnTo, $min, $max, $in, $equal, $orderBy, $orderMode, $startAt, $endAt);
 
         $json = array(
             'status' => 200,
