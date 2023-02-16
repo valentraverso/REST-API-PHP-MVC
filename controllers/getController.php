@@ -26,6 +26,18 @@ class GetController{
         return $json;
     }
 
+    static public function getDataRange($table, $columns, $btwnTo, $min, $max, $orderBy, $orderMode, $startAt, $endAt){
+        $model = new GetModel();
+        $response = $model->getDataRange($table, $columns, $btwnTo, $min, $max, $orderBy, $orderMode, $startAt, $endAt);
+
+        $json = array(
+            'status' => 200,
+            'results' => $response
+        );
+
+        return $json;
+    }
+
     static public function getRelDataFilter($table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt){
         $model = new GetModel();
         $response = $model->getRelDataFilter($table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt);

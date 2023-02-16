@@ -7,11 +7,11 @@ class GetModel extends Connection {
         $query = "SELECT $columns FROM $table";
 
         if ( $orderBy !== null && $orderMode !== null && $startAt === null && $endAt === null ) {
-            $query = "SELECT $columns FROM $table ORDER BY $orderBy $orderMode";
+            $query .= " ORDER BY $orderBy $orderMode";
         } else if ( $orderBy === null && $orderMode === null && $startAt !== null && $endAt !== null ) {
-            $query = "SELECT $columns FROM $table LIMIT $startAt, $endAt";
+            $query .= " LIMIT $startAt, $endAt";
         } else if ( $orderBy !== null && $orderMode !== null && $startAt !== null && $endAt ) {
-            $query = "SELECT $columns FROM $table ORDER BY $orderBy $orderMode LIMIT $startAt, $endAt";
+            $query .= " $table ORDER BY $orderBy $orderMode LIMIT $startAt, $endAt";
         }
 
         $sqlQuery = $this->con->prepare( $query );
@@ -122,4 +122,23 @@ class GetModel extends Connection {
 
         return $sqlQuery->fetch( PDO::FETCH_ASSOC );
     }
+
+    public function getDataRange( $table, $columns, $btwnTo, $min, $max, $orderBy, $orderMode, $startAt, $endAt ) {
+
+        $query = "SELECT $columns FROM $table WHERE $table.$btwnTo BETWEEN $min AND $max";
+
+        if ( $orderBy !== null && $orderMode !== null && $startAt === null && $endAt === null ) {
+            $query .= " ORDER BY $orderBy $orderMode";
+        } else if ( $orderBy === null && $orderMode === null && $startAt !== null && $endAt !== null ) {
+            $query .= " LIMIT $startAt, $endAt";
+        } else if ( $orderBy !== null && $orderMode !== null && $startAt !== null && $endAt ) {
+            $query .= " $table ORDER BY $orderBy $orderMode LIMIT $startAt, $endAt";
+        }
+
+        $sqlQuery = $this->con->prepare( $query );
+        $sqlQuery->execute();
+
+        return $sqlQuery->fetch( PDO::FETCH_ASSOC );
+    }
+
 }
