@@ -3,12 +3,10 @@ require_once BASE_PATH.'/models/connection.php';
 
 class GetModel extends Connection {
     public function getDataNoFilter( $table, $columns, $orderBy, $orderMode, $startAt, $endAt ) {
-
-        if(empty($this->getColumnsDB($table)){
+        $con = new Connection();
+        if (empty($con->getColumnsDB($table))){
             return null;
         }
-
-        return;
 
         $query = "SELECT $columns FROM $table";
 
@@ -27,6 +25,11 @@ class GetModel extends Connection {
     }
 
     public function getRelDataNoFilter( $table, $columns, $tableRel, $equalRel, $orderBy, $orderMode, $startAt, $endAt ) {
+        $con = new Connection();
+        if (empty($con->getColumnsDB($table))){
+            return null;
+        }
+
         $arrayTableRel = explode( ',', $tableRel );
         $arrayEqualRel = explode( ',', $equalRel );
 
@@ -53,6 +56,11 @@ class GetModel extends Connection {
     }
 
     public function getDataFilter( $table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
+        $con = new Connection();
+        if (empty($con->getColumnsDB($table))){
+            return null;
+        }
+
         $arrayIn = explode( ',', $in );
         $arrayEqual = explode( ',', $equal );
 
@@ -86,6 +94,11 @@ class GetModel extends Connection {
     }
 
     public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
+        $con = new Connection();
+        if (empty($con->getColumnsDB($table))){
+            return null;
+        }
+        
         $arrayIn = explode( ',', $in );
         $arrayEqual = explode( ',', $equal );
 
@@ -130,6 +143,11 @@ class GetModel extends Connection {
     }
 
     public function getDataRange( $table, $columns, $btwnTo, $min, $max, $in, $equal, $orderBy, $orderMode, $startAt, $endAt, $tableRel, $equalRel ) {
+        $con = new Connection();
+        if (empty($con->getColumnsDB($table))){
+            return null;
+        }
+        
         $arrayTableRel = explode( ',', $tableRel );
         $arrayEqualRel = explode( ',', $equalRel );
 
