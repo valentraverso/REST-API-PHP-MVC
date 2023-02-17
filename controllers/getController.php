@@ -6,10 +6,7 @@ class GetController{
         $model = new GetModel();
         $response = $model->getDataNoFilter($table, $columns, $orderBy, $orderMode, $startAt, $endAt);
 
-        $json = array(
-            'status' => 200,
-            'results' => $response
-        );
+       
 
         return $json;
     }
@@ -58,6 +55,22 @@ class GetController{
             'status' => 200,
             'results' => $response
         );
+
+        return $json;
+    }
+
+    protected function response($response){
+        if($response === null){
+            $json = array(
+                'status' => 404,
+                'results' => 'No results in the cloud!'
+            );
+        }else{
+            $json = array(
+                'status' => 200,
+                'results' => $response
+            );
+        }
 
         return $json;
     }

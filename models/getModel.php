@@ -4,6 +4,12 @@ require_once BASE_PATH.'/models/connection.php';
 class GetModel extends Connection {
     public function getDataNoFilter( $table, $columns, $orderBy, $orderMode, $startAt, $endAt ) {
 
+        if(empty($this->getColumnsDB($table)){
+            return null;
+        }
+
+        return;
+
         $query = "SELECT $columns FROM $table";
 
         if ( $orderBy !== null && $orderMode !== null && $startAt === null && $endAt === null ) {
@@ -17,7 +23,7 @@ class GetModel extends Connection {
         $sqlQuery = $this->con->prepare( $query );
         $sqlQuery->execute();
 
-        return $sqlQuery->fetch( PDO::FETCH_ASSOC );
+        return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
     }
 
     public function getRelDataNoFilter( $table, $columns, $tableRel, $equalRel, $orderBy, $orderMode, $startAt, $endAt ) {
@@ -43,7 +49,7 @@ class GetModel extends Connection {
         $sqlQuery = $this->con->prepare( $query );
         $sqlQuery->execute();
 
-        return $sqlQuery->fetch( PDO::FETCH_ASSOC );
+        return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
     }
 
     public function getDataFilter( $table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
@@ -150,7 +156,7 @@ class GetModel extends Connection {
         $sqlQuery = $this->con->prepare( $query );
         $sqlQuery->execute();
 
-        return $sqlQuery->fetch( PDO::FETCH_ASSOC );
+        return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
     }
 
 }
