@@ -123,9 +123,17 @@ class GetModel extends Connection {
         return $sqlQuery->fetch( PDO::FETCH_ASSOC );
     }
 
-    public function getDataRange( $table, $columns, $btwnTo, $min, $max, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
+    public function getDataRange( $table, $columns, $btwnTo, $min, $max, $in, $equal, $orderBy, $orderMode, $startAt, $endAt, $tableRel, $equalRel ) {
+        $arrayTableRel = explode( ',', $tableRel );
+        $arrayEqualRel = explode( ',', $equalRel );
 
-        $query = "SELECT $columns FROM $table WHERE $table.$btwnTo BETWEEN $min AND $max";
+        $moreTables = "";
+
+        foreach ( $arrayTableRel as $key => $value ) {
+            $moreTables .= " JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
+        }
+
+        $query = "SELECT $columns FROM $table $moreTables WHERE $table.$btwnTo BETWEEN $min AND $max";
 
         if($in !== null && $equal !== null){
             $query .= " AND $in IN ('$equal')";
