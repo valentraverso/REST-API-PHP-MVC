@@ -5,7 +5,7 @@ $indexPathAPI = count(array_filter($routesArray)) - DEEP_PROJECT;
 $table = explode('?', $routesArray[$indexPathAPI + DEEP_PROJECT])[0];
 
 if($indexPathAPI === 0){
-    $response = array(
+    $error = array(
         'status' => 404,
         'result' => 'You need to add the name of a table'
     );
@@ -19,5 +19,16 @@ if($indexPathAPI === 0){
         case 'POST':
             include_once BASE_PATH.'/routes/services/postRoute.php';
             break;
+    }
+
+    if(isset($response)){
+        echo json_encode( $response, http_response_code($response['status'])  );
+    }else{
+        $error = array(
+            'status' => 404,
+            'result' => 'Something went wrong :('
+        );
+
+        echo json_encode( $error, http_response_code($error['status'])  );
     }
 }

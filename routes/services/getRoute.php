@@ -32,5 +32,3 @@ if ( isset( $_GET[ 'tableRel' ] ) && isset( $_GET[ 'equalRel' ] ) && isset( $in 
     $response = GetController::getDataNoFilter( $table, $columns, $orderBy, $orderMode, $startAt, $endAt );
 
 }
-
-echo json_encode( $response );

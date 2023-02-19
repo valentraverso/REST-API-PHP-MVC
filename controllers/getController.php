@@ -48,7 +48,7 @@ class GetController{
     }
 
     static protected function response($response){
-        if(is_array($response) && !empty($response[0])){
+        if(is_array($response) && $response[0] === 'error'){
             $json = array(
                 'status' => 404,
                 'results' => $response[1]

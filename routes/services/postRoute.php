@@ -1,5 +1,6 @@
 <?php
-require_once BASE_PATH.'/models/connection.php';
+require_once BASE_PATH.'/controllers/postController.php';
 
-$connection = new Connection();
-$connection->getColumnsDB($table);
+if(isset($_POST)){
+    $response = PostController::postData($table, $_POST);
+}
