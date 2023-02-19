@@ -4,3 +4,5 @@ define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'].'/skills/REST-API-PHP-MVC');
 
 /* Stablish depth of your project */
 define('DEEP_PROJECT', 2);
+
+define('API_KEY', 'YOUR API KEY');

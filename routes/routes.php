@@ -1,4 +1,12 @@
 <?php
+$header = getallheaders();
+
+if(!isset($header['Auth']) || $header['Auth'] !== API_KEY){
+    echo 'NOT API KEY';
+    http_response_code(401);
+    die();
+}
+
 $routesArray = explode("/", $_SERVER['REQUEST_URI']);
 $indexPathAPI = count(array_filter($routesArray)) - DEEP_PROJECT;
 
@@ -23,7 +31,7 @@ if($indexPathAPI === 0){
             include_once BASE_PATH.'/routes/services/putRoute.php';
             break;
         case 'DELETE':
-            echo 'bobo';
+            include_once BASE_PATH.'/routes/services/deleteRoute.php';
             break;
     }
 

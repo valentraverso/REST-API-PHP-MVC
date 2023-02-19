@@ -27,7 +27,6 @@ class PutModel extends Connection {
         if($putQuery->execute()){
             $response = array(
                 'status' => 200,
-                'lastId' => $this->con->lastInsertId(),
                 'results' => 'Update succesfully'
             );
         }else{

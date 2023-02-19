@@ -62,7 +62,7 @@ class GetController {
             $json = array(
                 'status' => 200,
                 'count' => count( $response ),
-                'results' => $response[ 'results' ]
+                'results' => $response
             );
             return $json;
         } else {
