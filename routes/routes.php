@@ -19,6 +19,12 @@ if($indexPathAPI === 0){
         case 'POST':
             include_once BASE_PATH.'/routes/services/postRoute.php';
             break;
+        case 'PUT':
+            include_once BASE_PATH.'/routes/services/putRoute.php';
+            break;
+        case 'DELETE':
+            echo 'bobo';
+            break;
     }
 
     if(isset($response)){
