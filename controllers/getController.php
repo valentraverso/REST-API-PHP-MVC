@@ -48,16 +48,21 @@ class GetController{
     }
 
     static protected function response($response){
-        if(empty($response)){
+        if(is_array($response) && !empty($response[0])){
             $json = array(
                 'status' => 404,
-                'results' => 'No results in the cloud!'
+                'results' => $response[1]
             );
-        }else{
+        }else if(is_array($response)){
             $json = array(
                 'status' => 200,
                 'count' => count($response),
                 'results' => $response
+            );
+        }else{
+            $json = array(
+                'status' => 404,
+                'results' => 'Not Found'
             );
         }
 

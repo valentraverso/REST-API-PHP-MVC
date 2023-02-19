@@ -4,8 +4,9 @@ require_once BASE_PATH.'/models/connection.php';
 class GetModel extends Connection {
     public function getDataNoFilter( $table, $columns, $orderBy, $orderMode, $startAt, $endAt ) {
         $con = new Connection();
-        if (empty($con->getColumnsDB($table))){
-            return null;
+        $tableColumnsExistValidator = $con->getColumnsDB($table, ['*']);
+        if (is_array($tableColumnsExistValidator)){
+            return $tableColumnsExistValidator;
         }
 
         $query = "SELECT $columns FROM $table";
@@ -26,8 +27,9 @@ class GetModel extends Connection {
 
     public function getRelDataNoFilter( $table, $columns, $tableRel, $equalRel, $orderBy, $orderMode, $startAt, $endAt ) {
         $con = new Connection();
-        if (empty($con->getColumnsDB($table))){
-            return null;
+        $tableColumnsExistValidator = $con->getColumnsDB($table);
+        if (is_array($tableColumnsExistValidator)){
+            return $tableColumnsExistValidator;
         }
 
         $arrayTableRel = explode( ',', $tableRel );
@@ -56,13 +58,15 @@ class GetModel extends Connection {
     }
 
     public function getDataFilter( $table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
-        $con = new Connection();
-        if (empty($con->getColumnsDB($table))){
-            return null;
-        }
-
         $arrayIn = explode( ',', $in );
         $arrayEqual = explode( ',', $equal );
+
+        $con = new Connection();
+        $tableColumnsExistValidator = $con->getColumnsDB($table, $arrayIn);
+
+        if (is_array($tableColumnsExistValidator)){
+            return $tableColumnsExistValidator;
+        }
 
         $andQuery = '';
 
@@ -93,14 +97,16 @@ class GetModel extends Connection {
         return $sqlQuery->fetch( PDO::FETCH_ASSOC );
     }
 
-    public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
-        $con = new Connection();
-        if (empty($con->getColumnsDB($table))){
-            return null;
-        }
-        
+    public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) { 
         $arrayIn = explode( ',', $in );
         $arrayEqual = explode( ',', $equal );
+
+        $con = new Connection();
+        $tableColumnsExistValidator = $con->getColumnsDB($table, $arrayIn);
+
+        if (is_array($tableColumnsExistValidator)){
+            return $tableColumnsExistValidator;
+        }
 
         $andQuery = '';
 
@@ -144,8 +150,9 @@ class GetModel extends Connection {
 
     public function getDataRange( $table, $columns, $btwnTo, $min, $max, $in, $equal, $orderBy, $orderMode, $startAt, $endAt, $tableRel, $equalRel ) {
         $con = new Connection();
-        if (empty($con->getColumnsDB($table))){
-            return null;
+        $tableColumnsExistValidator = $con->getColumnsDB($table, ['*']);
+        if (is_array($tableColumnsExistValidator)){
+            return $tableColumnsExistValidator;
         }
         
         $arrayTableRel = explode( ',', $tableRel );
