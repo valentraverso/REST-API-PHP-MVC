@@ -28,7 +28,7 @@ The structure of the link need to be with a slash '/' at the beginning. <br>
     define('DEEP_PROJECT', 'DEEP OF YOUR PROJECT {INT}. EX: 2');
 
 This parameter could be confusing, but it's only how much folders are before the root or main of your project. <br>
-🤔 For Example, if the main of your project it's 'C:/Users/X/xampp/htdocs/project-root' and your API it's inside the folder API 'C:/Users/X/xampp/htdocs/project-root/API/' then the deep will we root + the folders between the main folder of the API + the folder of the API. 'project-root' it's the main of the project (0) + we don't have folders beetween + '/API' main folder of the API (1) = deep of the project (1). <br>
+🤔 For Example, if the main of your project it's 'C:/Users/X/xampp/htdocs/project-root' and your API it's inside the folder API 'C:/Users/X/xampp/htdocs/project-root/API/' then the deep will we root + the folders between the main folder of the API + the folder and the API. 'project-root' it's the main of the project (0) + we don't have folders beetween + '/API' main folder of the API (1) = deep of the project (1). <br>
 Remember that this value need to be like a integer and without quotes.
 
 3. **API KEY**
