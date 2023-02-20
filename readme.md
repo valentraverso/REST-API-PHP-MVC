@@ -5,8 +5,8 @@
 This API structure could be use in every project, only need to set up a few things to have it running in your hosting or localhost.
 
 ## 📝Index 
-- [Previous Settings](#previous-settings)
-- [Features](#features)
+- [Previous Settings](#%EF%B8%8F-previous-settings)
+- [Features](#how-to-use)
 - [Developers](#developers)
 
 ### ⚙️ Previous Settings
@@ -39,3 +39,4 @@ If you don't have stablish an API KEY, your API it's always going to return "NOT
 Why? Because the API KEY it's send by header, so first you need to add the API KEY into the parameter (this could be in whatever type of encryptation). Then you must sent it by a header called **auth**. <br><br>
 All of these are important steps to make your API work correctly, once time done you could run it.
 
+### 🚀 How to use
