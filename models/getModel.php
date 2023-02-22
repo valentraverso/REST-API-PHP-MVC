@@ -27,7 +27,7 @@ class GetModel extends Connection {
 
     public function getRelDataNoFilter( $table, $columns, $tableRel, $equalRel, $orderBy, $orderMode, $startAt, $endAt ) {
         $con = new Connection();
-        $tableColumnsExistValidator = $con->getColumnsDB($table);
+        $tableColumnsExistValidator = $con->getColumnsDB($table, ['*']);
         if (is_array($tableColumnsExistValidator)){
             return $tableColumnsExistValidator;
         }
