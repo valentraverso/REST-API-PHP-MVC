@@ -63,7 +63,7 @@ Basic structure of an endpoint:
 
     https://yourdomain.com/:table?in=:in&equal=:equal
 
-In: the in parameter its which column are you going to filter (could be 1 or more columns)
+In: the in parameter its which column are you going to filter (could be 1 or more columns)<br/>
 Equal: it's the relative value that we want to filter
 
 Pd: This filter it's none a relative parameter, only allows exact coincidencies
