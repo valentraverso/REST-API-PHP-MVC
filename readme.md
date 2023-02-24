@@ -37,6 +37,18 @@ Remember that this value need to be like a integer and without quotes.
 
 If you don't have stablish an API KEY, your API it's always going to return "NOT API KEY". <br>
 Why? Because the API KEY it's send by header, so first you need to add the API KEY into the parameter (this could be in whatever type of encryptation). Then you must sent it by a header called **auth**. <br><br>
-All of these are important steps to make your API work correctly, once time done you could run it.
 
-### 🚀 How to use
+4. **Database Info**
+
+The last step it's modifying the file connection.php inside /models folder.
+You need to replace the 4 varibales ($host, $user, $password, $dbName) which the ones that link with your database.
+
+Once you done all this steps, its time to run our API😁
+
+### How to use
+
+Basic structure of an endpoint:
+
+    https://yourdomain.com/:table
+
+:table -> this is going to be 
