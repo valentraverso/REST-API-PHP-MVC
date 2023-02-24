@@ -25,38 +25,6 @@ class GetModel extends Connection {
         return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
     }
 
-    public function getRelDataNoFilter( $table, $columns, $tableRel, $equalRel, $orderBy, $orderMode, $startAt, $endAt ) {
-        $con = new Connection();
-        $tableColumnsExistValidator = $con->getColumnsDB($table, ['*']);
-        if (is_array($tableColumnsExistValidator)){
-            return $tableColumnsExistValidator;
-        }
-
-        $arrayTableRel = explode( ',', $tableRel );
-        $arrayEqualRel = explode( ',', $equalRel );
-
-        $moreTables = "";
-
-        foreach ( $arrayTableRel as $key => $value ) {
-            $moreTables .= " JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
-        }
-
-        $query = "SELECT $columns FROM $table $moreTables";
-
-        if ( $orderBy !== null && $orderMode !== null && $startAt === null && $endAt === null ) {
-            $query = "SELECT $columns FROM $table $moreTables ORDER BY $orderBy $orderMode";
-        } else if ( $orderBy === null && $orderMode === null && $startAt !== null && $endAt !== null ) {
-            $query = "SELECT $columns FROM $table $moreTables LIMIT $startAt, $endAt";
-        } else if ( $orderBy !== null && $orderMode !== null && $startAt !== null && $endAt ) {
-            $query = "SELECT $columns FROM $table $moreTables ORDER BY $orderBy $orderMode LIMIT $startAt, $endAt";
-        }
-
-        $sqlQuery = $this->con->prepare( $query );
-        $sqlQuery->execute();
-
-        return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
-    }
-
     public function getDataFilter( $table, $columns, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
         $arrayIn = explode( ',', $in );
         $arrayEqual = explode( ',', $equal );
@@ -90,14 +58,47 @@ class GetModel extends Connection {
 
         $sqlQuery = $this->con->prepare( $query );
         foreach ( $arrayIn as $key => $value ) {
-            $sqlQuery->bindParam( ':'.$value, $arrayEqual[ $key ], PDO::PARAM_STR );
+            $sqlQuery->bindParam( ':'.$value, $arrayEqual[ $key ]);
         }
+        $sqlQuery->execute();
+        
+        return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
+    }
+    
+    public function getRelDataNoFilter( $table, $columns, $tableRel, $equalRel, $orderBy, $orderMode, $startAt, $endAt ) {
+        $con = new Connection();
+        $tableColumnsExistValidator = $con->getColumnsDB($table, ['*']);
+        if (is_array($tableColumnsExistValidator)){
+            return $tableColumnsExistValidator;
+        }
+
+        $arrayTableRel = explode( ',', $tableRel );
+        $arrayEqualRel = explode( ',', $equalRel );
+
+        $moreTables = "";
+
+        foreach ( $arrayTableRel as $key => $value ) {
+            $moreTables .= " JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
+        }
+
+        $query = "SELECT $columns FROM $table $moreTables";
+
+        if ( $orderBy !== null && $orderMode !== null && $startAt === null && $endAt === null ) {
+            $query = "SELECT $columns FROM $table $moreTables ORDER BY $orderBy $orderMode";
+        } else if ( $orderBy === null && $orderMode === null && $startAt !== null && $endAt !== null ) {
+            $query = "SELECT $columns FROM $table $moreTables LIMIT $startAt, $endAt";
+        } else if ( $orderBy !== null && $orderMode !== null && $startAt !== null && $endAt ) {
+            $query = "SELECT $columns FROM $table $moreTables ORDER BY $orderBy $orderMode LIMIT $startAt, $endAt";
+        }
+
+        $sqlQuery = $this->con->prepare( $query );
         $sqlQuery->execute();
 
         return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
     }
 
-    public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) { 
+    public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $tableIn, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) { 
+        $arrayTableIn = explode(',', $tableIn);
         $arrayIn = explode( ',', $in );
         $arrayEqual = explode( ',', $equal );
 
@@ -113,7 +114,7 @@ class GetModel extends Connection {
         if ( count( $arrayIn ) > 1 ) {
             foreach ( $arrayIn as $key => $value ) {
                 if ( $key > 0 ) {
-                    $andQuery .= 'AND '. $value . ' = :' . $value . ' ';
+                    $andQuery .= 'AND '. $arrayTableIn[$key].$value . ' = :' . $value . ' ';
                 }
             }
         }
@@ -127,7 +128,7 @@ class GetModel extends Connection {
             $moreTables .= " JOIN $arrayTableRel[$key] ON $table.$arrayEqualRel[$key] = $arrayTableRel[$key].$arrayEqualRel[$key]";
         }
 
-        $query = "SELECT $columns FROM $table $moreTables WHERE $arrayIn[0] = :$arrayIn[0] $andQuery";
+        $query = "SELECT $columns FROM $table $moreTables WHERE $arrayTableIn[0].$arrayIn[0] = :$arrayIn[0] $andQuery";
 
         if ( $orderBy !== null && $orderMode !== null && $startAt === null && $endAt === null ) {
             $query = "SELECT $columns FROM $table $moreTables WHERE $arrayIn[0] = :$arrayIn[0] $andQuery ORDER BY $orderBy $orderMode";
@@ -145,7 +146,7 @@ class GetModel extends Connection {
 
         $sqlQuery->execute();
 
-        return $sqlQuery->fetch( PDO::FETCH_ASSOC );
+        return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
     }
 
     public function getDataRange( $table, $columns, $btwnTo, $min, $max, $in, $equal, $orderBy, $orderMode, $startAt, $endAt, $tableRel, $equalRel ) {

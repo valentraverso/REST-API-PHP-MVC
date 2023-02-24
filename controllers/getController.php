@@ -29,9 +29,9 @@ class GetController {
         return $json;
     }
 
-    static public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
+    static public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $tableIn, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) {
         $model = new GetModel();
-        $response = $model->getRelDataFilter( $table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt );
+        $response = $model->getRelDataFilter( $table, $columns, $tableRel, $equalRel, $tableIn, $in, $equal, $orderBy, $orderMode, $startAt, $endAt );
 
         $json = GetController::response( $response );
 

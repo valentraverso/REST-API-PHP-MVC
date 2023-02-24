@@ -3,6 +3,7 @@ require_once BASE_PATH.'/controllers/getController.php';
 
 $columns = $_GET[ 'columns' ] ?? '*';
 $orderBy = $_GET[ 'orderBy' ] ?? null;
+$tableIn= $_GET[ 'tableIn' ] ?? null;
 $in = $_GET[ 'in' ] ?? null;
 $equal = $_GET[ 'equal' ] ?? null;
 $orderMode = $_GET[ 'orderMode' ] ?? null;
@@ -11,9 +12,9 @@ $endAt = $_GET[ 'endAt' ] ?? null;
 $tableRel = $_GET['tableRel'] ?? null;
 $equalRel = $_GET['equalRel'] ?? null;
 
-if ( isset( $_GET[ 'tableRel' ] ) && isset( $_GET[ 'equalRel' ] ) && isset( $in ) && isset( $equal ) ) {
+if ( isset( $_GET[ 'tableRel' ] ) && isset( $_GET[ 'equalRel' ] ) && isset($tableIn) && isset( $in ) && isset( $equal ) ) {
 
-    $response = GetController::getRelDataFilter( $table, $columns, $_GET[ 'tableRel' ], $_GET[ 'equalRel' ], $in, $equal, $orderBy, $orderMode, $startAt, $endAt );
+    $response = GetController::getRelDataFilter( $table, $columns, $_GET[ 'tableRel' ], $_GET[ 'equalRel' ], $tableIn, $in, $equal, $orderBy, $orderMode, $startAt, $endAt );
 
 } else if ( isset( $in ) && isset( $equal ) ) {
 
