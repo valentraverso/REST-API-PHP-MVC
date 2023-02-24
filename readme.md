@@ -58,4 +58,4 @@ Basic structure of an endpoint:
 
 ## Built With
 
-[![PHP][php.com]][PHP-url]
+[![JQuery][JQuery.com]][JQuery-url]
