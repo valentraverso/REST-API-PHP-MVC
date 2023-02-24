@@ -6,7 +6,8 @@ This API structure could be use in every project, only need to set up a few thin
 
 ## 📝Index 
 - [Previous Settings](#%EF%B8%8F-previous-settings)
-- [Features](#how-to-use)
+- [How to use](#how-to-use)
+    - - []
 - [Developers](#developers)
 
 ### ⚙️ Previous Settings
@@ -51,4 +52,10 @@ Basic structure of an endpoint:
 
     https://yourdomain.com/:table
 
-:table -> this is going to be 
+:table -> this is going to be the first table that our endpoint will aim
+
+**
+
+## Built With
+
+[![PHP][php.com]][PHP-url]
