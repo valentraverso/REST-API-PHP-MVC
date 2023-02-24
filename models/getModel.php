@@ -94,7 +94,7 @@ class GetModel extends Connection {
         }
         $sqlQuery->execute();
 
-        return $sqlQuery->fetch( PDO::FETCH_ASSOC );
+        return $sqlQuery->fetchAll( PDO::FETCH_ASSOC );
     }
 
     public function getRelDataFilter( $table, $columns, $tableRel, $equalRel, $in, $equal, $orderBy, $orderMode, $startAt, $endAt ) { 
