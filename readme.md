@@ -7,7 +7,12 @@ This API structure could be use in every project, only need to set up a few thin
 ## 📝Index 
 - [Previous Settings](#%EF%B8%8F-previous-settings)
 - [How to use](#how-to-use)
-    - - []
+    - [Columns Allowed](#columns-allowed-endpoint)
+    - [Seach by Filters](#filters-endpoint)
+    - [Search by Ranges](#ranges-endpoint)
+    - [Order By](#order-by-endpoint)
+    - [Limit](#limit-endpoint)
+    - [Related Tables](#related-tables-endpoint)   
 - [Developers](#developers)
 
 ### ⚙️ Previous Settings
@@ -54,8 +59,11 @@ Basic structure of an endpoint:
 
 :table -> this is going to be the first table that our endpoint will aim
 
-**
+**Filters Endpoint**
 
-## Built With
+    https://yourdomain.com/:table?in=:in&equal=:equal
 
-[![JQuery][JQuery.com]][JQuery-url]
+In: the in parameter its which column are you going to filter (could be 1 or more columns)
+Equal: it's the relative value that we want to filter
+
+Pd: This filter it's none a relative parameter, only allows exact coincidencies
